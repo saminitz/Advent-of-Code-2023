@@ -48,7 +48,7 @@ public class Main {
     }
 
     private static void executeBothParts(TaskDay taskDay) {
-        System.out.println(taskDay.getNewInstance().partOne());
-        System.out.println(taskDay.getNewInstance().partTwo());
+        System.out.printf("Part 1: %n%s%n%n", taskDay.getNewInstance().partOne());
+        System.out.printf("Part 2: %n%s%n%n", taskDay.getNewInstance().partTwo());
     }
 }
