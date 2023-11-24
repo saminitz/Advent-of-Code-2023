@@ -49,7 +49,13 @@ public class Main {
     }
 
     private static void executeBothParts(TaskDay taskDay) {
-        System.out.printf("%nPart 1: %n%s%n%n", taskDay.getNewInstance().init().partOne());
-        System.out.printf("Part 2: %n%s%n%n", taskDay.getNewInstance().init().partTwo());
+        System.out.println(String.format("""
+
+                Day %d:
+                    Part 1: %s
+                    Part 2: %s
+                """, taskDay.getNumber(),
+                taskDay.getNewInstance().init().partOne(),
+                taskDay.getNewInstance().init().partTwo()));
     }
 }
