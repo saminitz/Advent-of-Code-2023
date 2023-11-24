@@ -28,7 +28,7 @@ public class Main {
             }
             if (!TaskDay.hasDay(input)) {
                 input = -1;
-                System.out.print("This day is not implemented! Please choose again: ");
+                System.out.print("This day has not been solved yet! Please choose again: ");
             }
         }
         return input;

@@ -54,14 +54,12 @@ public enum TaskDay {
     }
 
     public Day getNewInstance() {
-        Day instance;
         try {
-            instance = this.associatedClass.getDeclaredConstructor().newInstance();
+            return this.associatedClass.getDeclaredConstructor().newInstance();
         } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
                 | NoSuchMethodException | SecurityException e) {
             throw new IllegalArgumentException("The given Day class does not exists");
         }
-        return instance;
     }
 
     @Override
