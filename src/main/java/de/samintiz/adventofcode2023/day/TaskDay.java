@@ -61,7 +61,6 @@ public enum TaskDay {
                 | NoSuchMethodException | SecurityException e) {
             throw new IllegalArgumentException("The given Day class does not exists");
         }
-        instance.init();
         return instance;
     }
 

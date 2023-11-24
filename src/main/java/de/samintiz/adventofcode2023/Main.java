@@ -24,6 +24,7 @@ public class Main {
             } catch (InputMismatchException e) {
                 System.out.print("Only numbers are allowed! Please choose again: ");
                 scanner.next();
+                continue;
             }
             if (!TaskDay.hasDay(input)) {
                 input = -1;
@@ -35,7 +36,7 @@ public class Main {
 
     private static void printPossibleDays() {
         StringBuilder msgBuilder = new StringBuilder();
-        msgBuilder.append("\n\nWelcome!");
+        msgBuilder.append("\n\nWelcome!\n");
         msgBuilder.append("Below are all implemented Days\n\n");
 
         for (TaskDay taskDay : TaskDay.values()) {
@@ -48,7 +49,7 @@ public class Main {
     }
 
     private static void executeBothParts(TaskDay taskDay) {
-        System.out.printf("Part 1: %n%s%n%n", taskDay.getNewInstance().partOne());
-        System.out.printf("Part 2: %n%s%n%n", taskDay.getNewInstance().partTwo());
+        System.out.printf("%nPart 1: %n%s%n%n", taskDay.getNewInstance().init().partOne());
+        System.out.printf("Part 2: %n%s%n%n", taskDay.getNewInstance().init().partTwo());
     }
 }
