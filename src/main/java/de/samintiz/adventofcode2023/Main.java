@@ -41,7 +41,7 @@ public class Main {
 
         for (Day day : DayManager.getAllPossibleDays()) {
             msgBuilder
-                    .append(String.format("%-4s Day %02d%n", String.format("(%d)", day.getNumber()), day.getNumber()));
+                    .append(String.format("- Day %2d%n", day.getNumber()));
         }
 
         msgBuilder.append("\nPlease enter the day you want to see: ");
