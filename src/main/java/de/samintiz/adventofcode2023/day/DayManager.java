@@ -31,6 +31,8 @@ public class DayManager {
             try {
                 days.add(getDayInstance(i));
             } catch (DayNotFoundException e) {
+                // Just ignore the error and don't add the requested day to the list because it
+                // does not exists
             }
         }
         return days;
