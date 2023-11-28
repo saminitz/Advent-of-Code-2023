@@ -3,16 +3,16 @@ package de.samintiz.adventofcode2023;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-import de.samintiz.adventofcode2023.day.TaskDay;
+import de.samintiz.adventofcode2023.day.Day;
+import de.samintiz.adventofcode2023.day.DayManager;
 
 public class Main {
 
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        int day = askUserForDayNumber();
-        TaskDay taskDay = TaskDay.of(day);
-        executeBothParts(taskDay);
+        int dayNumber = askUserForDayNumber();
+        executeBothParts(dayNumber);
     }
 
     private static int askUserForDayNumber() {
@@ -26,7 +26,7 @@ public class Main {
                 scanner.next();
                 continue;
             }
-            if (!TaskDay.hasDay(input)) {
+            if (!DayManager.isDayImplemented(input)) {
                 input = -1;
                 System.out.print("This day has not been solved yet! Please choose again: ");
             }
@@ -39,23 +39,24 @@ public class Main {
         msgBuilder.append("\n\nWelcome!\n");
         msgBuilder.append("Below are all implemented Days\n\n");
 
-        for (TaskDay taskDay : TaskDay.values()) {
+        for (Day day : DayManager.getAllPossibleDays()) {
             msgBuilder
-                    .append(String.format("%-4s %s%n", String.format("(%d)", taskDay.getNumber()), taskDay.toString()));
+                    .append(String.format("%-4s Day %02d%n", String.format("(%d)", day.getNumber()), day.getNumber()));
         }
 
         msgBuilder.append("\nPlease enter the day you want to see: ");
         System.out.print(msgBuilder);
     }
 
-    private static void executeBothParts(TaskDay taskDay) {
+    private static void executeBothParts(int dayNumber) {
+        Day day = DayManager.getDayInstance(dayNumber);
         System.out.println(String.format("""
 
                 Day %d:
                     Part 1: %s
                     Part 2: %s
-                """, taskDay.getNumber(),
-                taskDay.getNewInstance().init().partOne(),
-                taskDay.getNewInstance().init().partTwo()));
+                """, dayNumber,
+                day.partOne(),
+                day.partTwo()));
     }
 }

@@ -5,6 +5,8 @@ public interface Day {
         return this;
     }
 
+    public int getNumber();
+
     public default String partOne() {
         return "Not implemented!\n\n";
     }
