@@ -8,10 +8,10 @@ public interface Day {
     public int getNumber();
 
     public default String partOne() {
-        return "Not implemented!\n\n";
+        return "Not implemented!";
     }
 
     public default String partTwo() {
-        return "Not implemented!\n\n";
+        return "Not implemented!";
     }
 }
