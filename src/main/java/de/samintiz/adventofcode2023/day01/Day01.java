@@ -56,10 +56,10 @@ public class Day01 implements Day {
                 String spelledNumber = spelledNumbers.get(sIndex);
                 String firstCharOfSpelledNumber = spelledNumber.substring(0, 1);
                 String lastCharOfSpelledNumber = spelledNumber.substring(spelledNumber.length() - 1);
-                String spelledNumberToDigitWithFirstAndLastChar = line.replaceAll(
+                String spelledNumberToDigitAndSurroundedWithFirstAndLastChar = line.replaceAll(
                         spelledNumbers.get(sIndex),
                         firstCharOfSpelledNumber + (sIndex + 1) + lastCharOfSpelledNumber);
-                lines.set(lIndex, spelledNumberToDigitWithFirstAndLastChar);
+                lines.set(lIndex, spelledNumberToDigitAndSurroundedWithFirstAndLastChar);
             }
         }
 
