@@ -78,3 +78,5 @@ replay_pid*
 
 # Text files in target folder
 target/**/*.txt
+
+.vscode 
