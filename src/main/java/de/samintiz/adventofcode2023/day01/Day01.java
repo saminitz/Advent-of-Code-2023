@@ -1,10 +1,10 @@
 package de.samintiz.adventofcode2023.day01;
 
-import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 
 import de.samintiz.adventofcode2023.day.Day;
+import de.samintiz.adventofcode2023.reader.InputFile;
 import de.samintiz.adventofcode2023.reader.InputReader;
 
 public class Day01 implements Day {
@@ -13,8 +13,7 @@ public class Day01 implements Day {
 
     @Override
     public void init() {
-        Path inputPath = Path.of("src/main/java/de/samintiz/adventofcode2023/day01/input.txt");
-        allLines = InputReader.readAllLines(inputPath);
+        allLines = new InputReader(this, InputFile.NORMAL).readAllLines();
     }
 
     @Override
@@ -29,7 +28,6 @@ public class Day01 implements Day {
 
     @Override
     public String partTwo() {
-        System.out.println("Part2");
         List<String> convertedLines = convertAllSpelledNumbersToDigits(allLines);
         return sumCalibrationValueSum(convertedLines);
     }
@@ -63,8 +61,6 @@ public class Day01 implements Day {
             }
         }
 
-        System.out.println(lines.get(279));
         return lines;
     }
-
 }

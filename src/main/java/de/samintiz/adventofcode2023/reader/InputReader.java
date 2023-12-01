@@ -6,15 +6,22 @@ import java.nio.file.Path;
 import java.util.Collections;
 import java.util.List;
 
+import de.samintiz.adventofcode2023.day.Day;
+
 public class InputReader {
-    private InputReader() {
+    private Path file;
+
+    public InputReader(Day day, InputFile inputFile) {
+        String dayClassName = day.getClass().getName();
+        Path packagePath = Path.of("src/main/java", dayClassName.replace(".", "/")).getParent();
+        this.file = Path.of(packagePath.toString(), inputFile.getFileName());
     }
 
-    public static List<String> readAllLines(Path inputPath) {
+    public List<String> readAllLines() {
         try {
-            return Files.readAllLines(inputPath);
+            return Files.readAllLines(file);
         } catch (IOException e) {
-            System.out.printf("Unable to read input file: %s%n", inputPath.toString());
+            System.out.printf("Unable to read input file: %s%n", file.toString());
             e.printStackTrace();
         }
         return Collections.emptyList();
