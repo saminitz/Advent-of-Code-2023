@@ -5,9 +5,8 @@ import de.samintiz.adventofcode2023.day.Day;
 public class Day00 implements Day {
 
     @Override
-    public Day init() {
+    public void init() {
         System.out.println("Test: init");
-        return this;
     }
 
     @Override

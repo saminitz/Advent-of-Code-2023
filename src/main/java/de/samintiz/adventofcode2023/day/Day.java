@@ -1,9 +1,7 @@
 package de.samintiz.adventofcode2023.day;
 
 public interface Day {
-    public default Day init() {
-        return this;
-    }
+    public void init();
 
     public int getNumber();
 
