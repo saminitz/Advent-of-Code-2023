@@ -1,5 +1,6 @@
 package de.samintiz.adventofcode2023.day;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +12,11 @@ public class DayManager {
     public static Day getDayInstance(int number) {
         try {
             Class<?> unknownClass = Class.forName(formatDayNumberToClass(number));
-            return Day.class.cast(unknownClass);
-        } catch (ClassNotFoundException | ClassCastException e) {
+            Object objInstance;
+            objInstance = unknownClass.getDeclaredConstructor().newInstance();
+            return Day.class.cast(objInstance);
+        } catch (ClassNotFoundException | ClassCastException | InstantiationException | IllegalAccessException
+                | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
             throw new DayNotFoundException();
         }
     }
