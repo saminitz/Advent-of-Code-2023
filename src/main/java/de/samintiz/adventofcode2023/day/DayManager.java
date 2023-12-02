@@ -1,8 +1,8 @@
 package de.samintiz.adventofcode2023.day;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class DayManager {
 
@@ -23,14 +23,14 @@ public class DayManager {
         }
     }
 
-    public static List<Day> getAllPossibleDays() {
-        List<Day> days = new ArrayList<>();
+    public static Map<Integer, Day> getAllPossibleDays() {
+        Map<Integer, Day> days = new LinkedHashMap<>();
 
         // Not very pretty but idk a better way
         int maxDay = 31;
         for (int i = 0; i <= maxDay; i++) {
             try {
-                days.add(getDayInstance(i));
+                days.put(i, getDayInstance(i));
             } catch (DayNotFoundException e) {
                 // Just ignore the error and don't add the requested day to the list because it
                 // does not exists

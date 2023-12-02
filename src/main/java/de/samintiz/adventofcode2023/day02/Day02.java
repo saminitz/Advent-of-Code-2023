@@ -19,11 +19,6 @@ public class Day02 implements Day {
     }
 
     @Override
-    public int getNumber() {
-        return 2;
-    }
-
-    @Override
     public String partOne() {
         RevealedCubes requirement = new RevealedCubes(12, 13, 14);
         return String.valueOf(sumPossibleGameIds(requirement));

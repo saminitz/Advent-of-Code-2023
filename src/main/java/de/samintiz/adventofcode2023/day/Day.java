@@ -3,8 +3,6 @@ package de.samintiz.adventofcode2023.day;
 public interface Day {
     public void init();
 
-    public int getNumber();
-
     public default String partOne() {
         return "Not implemented!";
     }

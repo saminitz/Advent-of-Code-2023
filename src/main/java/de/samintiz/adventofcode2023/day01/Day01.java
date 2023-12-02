@@ -17,11 +17,6 @@ public class Day01 implements Day {
     }
 
     @Override
-    public int getNumber() {
-        return 1;
-    }
-
-    @Override
     public String partOne() {
         return sumCalibrationValueSum(allLines);
     }

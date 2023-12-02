@@ -1,6 +1,7 @@
 package de.samintiz.adventofcode2023.ui;
 
 import java.util.InputMismatchException;
+import java.util.Map.Entry;
 import java.util.Scanner;
 
 import de.samintiz.adventofcode2023.day.Day;
@@ -36,9 +37,8 @@ public class Ui {
         msgBuilder.append("\n\nWelcome!\n");
         msgBuilder.append("Below are all implemented Days\n\n");
 
-        for (Day day : DayManager.getAllPossibleDays()) {
-            msgBuilder
-                    .append(String.format("- Day %2d%n", day.getNumber()));
+        for (Entry<Integer, Day> day : DayManager.getAllPossibleDays().entrySet()) {
+            msgBuilder.append(String.format("- Day %2d%n", day.getKey()));
         }
 
         msgBuilder.append("\nPlease enter the day you want to see: ");

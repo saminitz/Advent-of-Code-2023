@@ -10,11 +10,6 @@ public class Day00 implements Day {
     }
 
     @Override
-    public int getNumber() {
-        return 0;
-    }
-
-    @Override
     public String partOne() {
         return "Test: " + this.hashCode() + "partOne";
     }
