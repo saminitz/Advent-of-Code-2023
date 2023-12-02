@@ -2,12 +2,11 @@ package de.samintiz.adventofcode2023;
 
 import de.samintiz.adventofcode2023.day.Day;
 import de.samintiz.adventofcode2023.day.DayManager;
-import de.samintiz.adventofcode2023.ui.Ui;
 
 public class Main {
 
     public static void main(String[] args) {
-        int dayNumber = Ui.askUserForDayNumber();
+        int dayNumber = 2;// Ui.askUserForDayNumber();
         executeBothParts(dayNumber);
     }
 
