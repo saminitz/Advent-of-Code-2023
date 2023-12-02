@@ -15,7 +15,7 @@ public class Day02 implements Day {
 
     @Override
     public void init() {
-        allLines = new InputReader(this, InputFile.NORMAL).readAllLines();
+        allLines = new InputReader(this, InputFile.INPUT).readAllLines();
     }
 
     @Override
@@ -31,12 +31,38 @@ public class Day02 implements Day {
 
     @Override
     public String partTwo() {
-        return "Not implemented!";
+        List<Game> allGames = convertAllLinesToGameList();
+        List<List<RevealedCubes>> allRevealedCubes = allGames
+                .stream()
+                .map(Game::revealedCubes)
+                .toList();
+        List<RevealedCubes> allMinimumCubes = allRevealedCubes.stream().map(this::getMinimumCubesOfGame).toList();
+        return String.valueOf(multiplyAllCubesTogetherAndSum(allMinimumCubes));
+    }
+
+    private int multiplyAllCubesTogetherAndSum(List<RevealedCubes> allMinimumCubes) {
+
+        return allMinimumCubes
+                .stream()
+                .map(cubes -> Math.max(1, cubes.red()) * Math.max(1, cubes.green()) * Math.max(1, cubes.blue()))
+                .reduce(0, (a, b) -> a + b);
+    }
+
+    private RevealedCubes getMinimumCubesOfGame(List<RevealedCubes> allRevealedCubes) {
+        RevealedCubes minimumCubes = allRevealedCubes.get(0);
+        for (int i = 1; i < allRevealedCubes.size(); i++) {
+            RevealedCubes revealedCubes = allRevealedCubes.get(i);
+            minimumCubes = minimumCubes.getSmallestOfBothRevealedCubes(revealedCubes);
+        }
+        return minimumCubes;
     }
 
     private int sumPossibleGameIds(RevealedCubes requirement) {
         List<Game> allGames = convertAllLinesToGameList();
-        List<Game> possibleGames = allGames.stream().filter(game -> isGamePossible(game, requirement)).toList();
+        List<Game> possibleGames = allGames
+                .stream()
+                .filter(game -> isGamePossible(game, requirement))
+                .toList();
         return possibleGames.stream().map(Game::id).reduce(0, (a, b) -> a + b);
     }
 
@@ -52,7 +78,10 @@ public class Day02 implements Day {
     }
 
     private List<Game> convertAllLinesToGameList() {
-        return allLines.stream().map(this::convertLineIntoGame).toList();
+        return allLines
+                .stream()
+                .map(this::convertLineIntoGame)
+                .toList();
     }
 
     private Game convertLineIntoGame(String line) {

@@ -1,7 +1,7 @@
 package de.samintiz.adventofcode2023.reader;
 
 public enum InputFile {
-    NORMAL("input.txt"),
+    INPUT("input.txt"),
     PART_ONE_TEST("partOneTest.txt"),
     PART_TWO_TEST("partTwoTest.txt");
 
