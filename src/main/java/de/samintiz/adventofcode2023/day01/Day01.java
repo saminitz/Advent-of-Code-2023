@@ -13,7 +13,7 @@ public class Day01 implements Day {
 
     @Override
     public void init() {
-        allLines = new InputReader(this, InputFile.NORMAL).readAllLines();
+        allLines = new InputReader(this, InputFile.INPUT).readAllLines();
     }
 
     @Override
