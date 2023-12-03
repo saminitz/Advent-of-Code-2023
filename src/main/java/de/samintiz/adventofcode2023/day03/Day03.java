@@ -62,7 +62,7 @@ public class Day03 implements Day {
             int forwardSum = getForwardSum(line, forwardIndex);
 
             // left
-            int reverseIndex = getStartingIndex(line, index - 1);
+            int reverseIndex = getStartingIndex(line, index);
             int reverseSum = getForwardSum(line, reverseIndex);
 
             return forwardSum + reverseSum;
