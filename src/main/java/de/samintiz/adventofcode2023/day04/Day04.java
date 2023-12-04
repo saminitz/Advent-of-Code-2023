@@ -35,14 +35,14 @@ public class Day04 implements Day {
         int originalCardSize = cards.size();
         for (int i = 0; i < originalCardSize; i++) {
             // Don't need to search for the id because the new ones get appended in the end
-            long matchingCount = cards.get(i).getMatchingCount();
+            long numberOfMatches = cards.get(i).numberOfMatches();
             Card currentCard = cards.get(i);
-            for (int j = 1; j <= matchingCount; j++) {
-                int newId = i + j + 1;
+            for (int n = 1; n <= numberOfMatches; n++) {
+                int nextId = i + n + 1;
                 long count = cards.stream().filter(card -> card.id() == currentCard.id()).count();
-                Card newCard = cards.stream().filter(card -> card.id() == newId).findFirst().get();
-                for (int k = 0; k < count; k++) {
-                    cards.add(new Card(newId, newCard.winningNumbers(), newCard.chosenNumbers()));
+                Card nextCard = cards.stream().filter(card -> card.id() == nextId).findFirst().get();
+                for (int timesToAdd = 0; timesToAdd < count; timesToAdd++) {
+                    cards.add(new Card(nextId, nextCard.winningNumbers(), nextCard.chosenNumbers()));
                 }
             }
         }

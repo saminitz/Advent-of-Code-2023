@@ -8,7 +8,7 @@ public record Card(int id, List<Integer> winningNumbers, List<Integer> chosenNum
         return Math.max(0, 1 << count);
     }
 
-    public long getMatchingCount() {
+    public long numberOfMatches() {
         return chosenNumbers.stream().filter(winningNumbers::contains).count();
     }
 }
