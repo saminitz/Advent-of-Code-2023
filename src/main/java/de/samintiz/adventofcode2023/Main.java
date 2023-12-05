@@ -1,6 +1,5 @@
 package de.samintiz.adventofcode2023;
 
-import de.samintiz.adventofcode2023.day.Day;
 import de.samintiz.adventofcode2023.day.DayManager;
 import de.samintiz.adventofcode2023.ui.Ui;
 
@@ -12,14 +11,13 @@ public class Main {
     }
 
     private static void executeBothParts(int dayNumber) {
-        Day day = DayManager.getDayInstance(dayNumber);
         System.out.println(String.format("""
 
                 Day %d:
                     Part 1: %s
                     Part 2: %s
                 """, dayNumber,
-                day.partOne(),
-                day.partTwo()));
+                DayManager.getDayInstance(dayNumber).partOne(),
+                DayManager.getDayInstance(dayNumber).partTwo()));
     }
 }
