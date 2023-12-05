@@ -4,7 +4,7 @@ public record SourceDestinationMap(String sourceName, String destinationName, lo
         long sourceRangeStart, long rangeLength) {
 
     public boolean isSourceIdInRange(long sourceId) {
-        return sourceId >= sourceRangeStart && sourceId <= sourceRangeStart + rangeLength;
+        return sourceId >= sourceRangeStart && sourceId < sourceRangeStart + rangeLength;
     }
 
     public long getDestinationIdOfSourceId(long sourceId) {
