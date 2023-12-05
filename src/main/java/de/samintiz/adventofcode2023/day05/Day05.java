@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.LongStream;
 
 import de.samintiz.adventofcode2023.day.Day;
 import de.samintiz.adventofcode2023.reader.InputFile;
@@ -46,50 +46,28 @@ public class Day05 implements Day {
     }
 
     private long getLowestLocationOfSeedRange() {
-        AtomicLong smallestLocation = new AtomicLong(Long.MAX_VALUE);
-        List<Thread> threads = new ArrayList<>();
+        Long smallestLocation = Long.MAX_VALUE;
 
         for (int i = 0; i < allSeeds.size(); i += 2) {
             long startId = allSeeds.get(i);
             long rangeLength = allSeeds.get(i + 1);
             long lastId = startId + rangeLength;
-            Thread rangeThread = new Thread() {
-                @Override
-                public void run() {
-                    long smallestLocationInLoop = Long.MAX_VALUE;
-                    for (long newSeedId = startId; newSeedId < lastId; newSeedId++) {
-                        smallestLocationInLoop = getSmallestLocation(smallestLocationInLoop, newSeedId);
-                    }
-                    synchronized (smallestLocation) {
-                        if (smallestLocationInLoop < smallestLocation.get()) {
-                            smallestLocation.set(smallestLocationInLoop);
-                        }
-                    }
-                }
-            };
-            rangeThread.start();
-            threads.add(rangeThread);
-        }
-        threads.stream().forEach(t -> {
-            try {
-                t.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
-        return smallestLocation.get();
-    }
-
-    @SuppressWarnings("java:S3655")
-    private long getLowestLocationOfSeeds() {
-        long smallestLocation = Long.MAX_VALUE;
-        for (Long seed : allSeeds) {
-            smallestLocation = getSmallestLocation(smallestLocation, seed);
+            long smallestLocationInLoop = LongStream.range(startId, lastId).boxed().parallel()
+                    .map(this::getSmallestLocation).reduce(Long::min).orElseThrow();
+            smallestLocation = Math.min(smallestLocation, smallestLocationInLoop);
         }
         return smallestLocation;
     }
 
-    private long getSmallestLocation(long smallestLocation, long seed) {
+    private long getLowestLocationOfSeeds() {
+        long smallestLocation = Long.MAX_VALUE;
+        for (Long seed : allSeeds) {
+            smallestLocation = Math.min(smallestLocation, getSmallestLocation(seed));
+        }
+        return smallestLocation;
+    }
+
+    private long getSmallestLocation(long seed) {
         long id = seed;
         String destinationName = "seed";
 
@@ -109,10 +87,7 @@ public class Day05 implements Day {
             }
         }
 
-        if (id < smallestLocation) {
-            smallestLocation = id;
-        }
-        return smallestLocation;
+        return id;
     }
 
     private void convertInput() {
