@@ -8,11 +8,7 @@ public record SourceDestinationMap(String sourceName, String destinationName, lo
     }
 
     public long getDestinationIdOfSourceId(long sourceId) {
-        if (isSourceIdInRange(sourceId)) {
-            long difference = sourceRangeStart - destinationRangeStart;
-            return sourceId - difference;
-        } else {
-            return sourceId;
-        }
+        long difference = sourceRangeStart - destinationRangeStart;
+        return sourceId - difference;
     }
 }

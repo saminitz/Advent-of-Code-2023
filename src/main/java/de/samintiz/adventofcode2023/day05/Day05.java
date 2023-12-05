@@ -1,7 +1,9 @@
 package de.samintiz.adventofcode2023.day05;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.regex.Matcher;
@@ -16,10 +18,19 @@ public class Day05 implements Day {
     private List<String> allLines;
     List<Long> allSeeds;
     List<SourceDestinationMap> sourceDestinationMaps;
+    Map<String, String> sourceDestination;
 
     @Override
     public void init() {
-        allLines = new InputReader(this, InputFile.PART_ONE_TEST).readAllLines();
+        allLines = new InputReader(this, InputFile.INPUT).readAllLines();
+        sourceDestination = new HashMap<>();
+        sourceDestination.put("seed", "soil");
+        sourceDestination.put("soil", "fertilizer");
+        sourceDestination.put("fertilizer", "water");
+        sourceDestination.put("water", "light");
+        sourceDestination.put("light", "temperature");
+        sourceDestination.put("temperature", "humidity");
+        sourceDestination.put("humidity", "location");
     }
 
     @Override
@@ -39,8 +50,8 @@ public class Day05 implements Day {
         List<Thread> threads = new ArrayList<>();
 
         for (int i = 0; i < allSeeds.size(); i += 2) {
-            long startId = allSeeds.get(i) + 1;
-            long rangeLength = allSeeds.get(i + 1) - 1;
+            long startId = allSeeds.get(i);
+            long rangeLength = allSeeds.get(i + 1);
             long lastId = startId + rangeLength;
             Thread rangeThread = new Thread() {
                 @Override
@@ -85,10 +96,8 @@ public class Day05 implements Day {
         while (!destinationName.equals("location")) {
             long finalId = id;
             String finalDestinationName = destinationName;
-            List<SourceDestinationMap> sourceDestinationMapOfType = sourceDestinationMaps.stream()
-                    .filter(x -> x.sourceName().equals(finalDestinationName)).toList();
-            Optional<SourceDestinationMap> sourceDestinationMapOptional = sourceDestinationMapOfType.stream()
-                    .filter(x -> x.isSourceIdInRange(finalId))
+            Optional<SourceDestinationMap> sourceDestinationMapOptional = sourceDestinationMaps.stream()
+                    .filter(x -> x.sourceName().equals(finalDestinationName) && x.isSourceIdInRange(finalId))
                     .findFirst();
 
             if (sourceDestinationMapOptional.isPresent()) {
@@ -96,7 +105,7 @@ public class Day05 implements Day {
                 destinationName = sourceDestinationMap.destinationName();
                 id = sourceDestinationMap.getDestinationIdOfSourceId(finalId);
             } else {
-                destinationName = sourceDestinationMapOfType.get(0).destinationName();
+                destinationName = sourceDestination.get(finalDestinationName);
             }
         }
 
