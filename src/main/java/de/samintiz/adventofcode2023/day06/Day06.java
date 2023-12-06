@@ -27,7 +27,10 @@ public class Day06 implements Day {
 
     @Override
     public String partTwo() {
-        return String.valueOf("Not implemented");
+        removeAllSpacesFromAllLines();
+        List<TimeDistance> timeDistances = convertAllLines();
+        List<Long> numberOfPossibleWins = getNumberOfPossibleWins(timeDistances);
+        return String.valueOf(numberOfPossibleWins.stream().reduce(1L, (a, b) -> a * b));
     }
 
     private List<Long> getNumberOfPossibleWins(List<TimeDistance> timeDistances) {
@@ -46,6 +49,10 @@ public class Day06 implements Day {
         }
 
         return numberOfPossibleWins;
+    }
+
+    private void removeAllSpacesFromAllLines() {
+        allLines = allLines.stream().map(line -> line.replaceAll("\\s", "")).toList();
     }
 
     private List<TimeDistance> convertAllLines() {
