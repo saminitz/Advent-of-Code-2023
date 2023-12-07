@@ -12,6 +12,8 @@ import de.samintiz.adventofcode2023.reader.InputReader;
 
 public class Day07 implements Day {
 
+    public static boolean joker;
+
     private List<String> allLines;
 
     @Override
@@ -21,19 +23,25 @@ public class Day07 implements Day {
 
     @Override
     public String partOne() {
-        List<Hand> allHands = convertAllLines();
-        allHands.sort(Hand::compareTo);
-
-        long totalWinnings = IntStream.range(1, allHands.size() + 1).mapToLong(i -> allHands.get(i - 1).getBid() * i)
-                .reduce(0, (a, b) -> a + b);
-
-        // return String.valueOf(allHands.get(0).compareTo(allHands.get(3)));
-        return String.valueOf(totalWinnings);
+        Day07.joker = false;
+        Card.setOrderedCharacters();
+        return String.valueOf(getTotalWinnings());
     }
 
     @Override
     public String partTwo() {
-        return String.valueOf("Not implemented!");
+        Day07.joker = true;
+        Card.setOrderedCharacters();
+        return String.valueOf(getTotalWinnings());
+    }
+
+    private long getTotalWinnings() {
+        List<Hand> allHands = convertAllLines();
+        allHands.stream().forEach(Hand::getHandValue);
+        allHands.sort(Hand::compareTo);
+
+        return IntStream.range(1, allHands.size() + 1).mapToLong(i -> allHands.get(i - 1).getBid() * i)
+                .reduce(0, (a, b) -> a + b);
     }
 
     private List<Hand> convertAllLines() {

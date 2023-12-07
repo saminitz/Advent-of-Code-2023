@@ -36,16 +36,37 @@ public class Hand implements Comparable<Hand> {
     }
 
     private boolean isNTimesOfSameKind(int n) {
-        return groupedCards.values().stream().anyMatch(x -> x == n);
+        if (!Day07.joker) {
+            return groupedCards.values().stream().anyMatch(x -> x == n);
+        } else {
+            Card jCard = new Card('J');
+            long jokerCount = groupedCards.get(jCard) == null ? 0 : groupedCards.get(jCard);
+            return groupedCards.entrySet().stream()
+                    .anyMatch(x -> x.getValue() + (x.getKey().equals(jCard) ? 0 : jokerCount) == n);
+        }
     }
 
     private boolean isFullHouse() {
-        return groupedCards.values().stream().anyMatch(x -> x == 3)
-                && groupedCards.values().stream().anyMatch(x -> x == 2);
+        if (!Day07.joker) {
+            return groupedCards.values().stream().anyMatch(x -> x == 2)
+                    && groupedCards.values().stream().anyMatch(x -> x == 3);
+        } else {
+            Card jCard = new Card('J');
+            long jokerCount = groupedCards.get(jCard) == null ? 0 : groupedCards.get(jCard);
+            boolean twoPairs = groupedCards.values().stream().filter(x -> x == 2).count() == 2;
+            return (twoPairs && jokerCount == 1) || (groupedCards.values().stream().anyMatch(x -> x == 2)
+                    && groupedCards.values().stream().anyMatch(x -> x == 3));
+        }
     }
 
     private boolean hasTwoPair() {
-        return groupedCards.values().stream().filter(x -> x == 2).count() == 2;
+        if (!Day07.joker) {
+            return groupedCards.values().stream().filter(x -> x == 2).count() == 2;
+        } else {
+            Card jCard = new Card('J');
+            long jokerCount = groupedCards.get(jCard) == null ? 0 : groupedCards.get(jCard);
+            return jokerCount == 2 || groupedCards.values().stream().filter(x -> x == 2).count() == 2;
+        }
     }
 
     private int getValueForType() {
@@ -70,7 +91,7 @@ public class Hand implements Comparable<Hand> {
         return 10;
     }
 
-    private long getHandValue() {
+    public long getHandValue() {
         long handValue = (getValueForType() * 10000000000L);
         for (int i = 0; i < cards.size(); i++) {
             int invertedIndex = cards.size() - 1 - i;
