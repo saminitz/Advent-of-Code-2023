@@ -4,6 +4,9 @@ import java.util.List;
 
 public class LCDFinder {
 
+    private LCDFinder() {
+    }
+
     private static long findGreatestCommonDivisor(long num1, long num2) {
         while (num2 != 0) {
             long temp = num2;

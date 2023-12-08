@@ -27,7 +27,7 @@ public class Day08 implements Day {
     @Override
     public String partOne() {
         convertAllLines();
-        return String.valueOf(countStepsToEnd("AAA", "ZZZ", (a, b) -> a.equals(b)));
+        return String.valueOf(countStepsToEnd("AAA", "ZZZ", Object::equals));
     }
 
     @Override
