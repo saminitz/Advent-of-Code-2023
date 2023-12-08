@@ -1,8 +1,10 @@
 package de.samintiz.adventofcode2023.day08;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiPredicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,20 +27,30 @@ public class Day08 implements Day {
     @Override
     public String partOne() {
         convertAllLines();
-        return String.valueOf(countStepsToEnd());
+        return String.valueOf(countStepsToEnd("AAA", "ZZZ", (a, b) -> a.equals(b)));
     }
 
     @Override
     public String partTwo() {
-        return String.valueOf("Not implemented!");
+        convertAllLines();
+        return String.valueOf(countStepsToEndParallel());
     }
 
-    private long countStepsToEnd() {
-        String currentKey = "AAA";
+    private long countStepsToEndParallel() {
+        List<String> currentKeys = new ArrayList<>();
+        List<Long> stepsToZ = new ArrayList<>();
+        currentKeys.addAll(directionsMap.keySet().stream().filter(key -> key.endsWith("A")).toList());
+
+        stepsToZ.addAll(currentKeys.stream().map(key -> countStepsToEnd(key, "", (a, b) -> a.endsWith("Z"))).toList());
+
+        return LCDFinder.findLeastCommonDenominator(stepsToZ);
+    }
+
+    private long countStepsToEnd(String currentKey, String endKey, BiPredicate<String, String> compare) {
         int index = 0;
         int stepCount = 0;
 
-        while (!currentKey.equals("ZZZ")) {
+        while (!compare.test(currentKey, endKey)) {
             stepCount++;
             if (instructions[index]) {
                 // Left
