@@ -15,6 +15,10 @@ public class Main {
     }
 
     private static void executeBothParts(int dayNumber) {
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+        Date date = new Date();
+        System.err.printf("%nTime Started: %s Uhr%n%n", formatter.format(date));
+
         long startTime = System.currentTimeMillis();
 
         String partOne = DayManager.getDayInstance(dayNumber).partOne();
@@ -23,9 +27,6 @@ public class Main {
         long endTime = System.currentTimeMillis();
         long elapsedTime = endTime - startTime;
 
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-        Date date = new Date();
-        System.err.printf("%nTime Started: %s Uhr%n%n", formatter.format(date));
         System.out.println(String.format("""
                 Day %d:
                     Part 1: %s
