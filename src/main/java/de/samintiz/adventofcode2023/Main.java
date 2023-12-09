@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import de.samintiz.adventofcode2023.day.Day;
 import de.samintiz.adventofcode2023.day.DayManager;
 import de.samintiz.adventofcode2023.ui.Ui;
 
@@ -21,8 +22,11 @@ public class Main {
 
         long startTime = System.currentTimeMillis();
 
-        String partOne = DayManager.getDayInstance(dayNumber).partOne();
-        String partTwo = DayManager.getDayInstance(dayNumber).partTwo();
+        Day dayPartOne = getNewDayInstance(dayNumber);
+        String partOneTwo = dayPartOne.partOne();
+
+        Day dayPartTwo = getNewDayInstance(dayNumber);
+        String partTwoResult = dayPartTwo.partOne();
 
         long endTime = System.currentTimeMillis();
         long elapsedTime = endTime - startTime;
@@ -35,9 +39,15 @@ public class Main {
                 Time elapsed: %s
                 """,
                 dayNumber,
-                partOne,
-                partTwo,
+                partOneTwo,
+                partTwoResult,
                 convertMillisecondsToString(elapsedTime)));
+    }
+
+    private static Day getNewDayInstance(int dayNumber) {
+        Day dayPartTwo = DayManager.getDayInstance(dayNumber);
+        dayPartTwo.init();
+        return dayPartTwo;
     }
 
     private static String convertMillisecondsToString(long milliseconds) {

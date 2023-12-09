@@ -14,9 +14,7 @@ public class DayManager {
             Class<?> unknownClass = Class.forName(formatDayNumberToClass(number));
             Object objInstance;
             objInstance = unknownClass.getDeclaredConstructor().newInstance();
-            Day day = Day.class.cast(objInstance);
-            day.init();
-            return day;
+            return Day.class.cast(objInstance);
         } catch (ClassNotFoundException | ClassCastException | InstantiationException | IllegalAccessException
                 | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
             throw new DayNotFoundException();
