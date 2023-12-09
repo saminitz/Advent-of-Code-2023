@@ -1,9 +1,9 @@
 package de.samintiz.adventofcode2023.reader;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Collections;
 import java.util.List;
 
 import de.samintiz.adventofcode2023.day.Day;
@@ -22,8 +22,7 @@ public class InputReader {
             return Files.readAllLines(file);
         } catch (IOException e) {
             System.out.printf("Unable to read input file: %s%n", file.toString());
-            e.printStackTrace();
+            throw new UncheckedIOException(e);
         }
-        return Collections.emptyList();
     }
 }
