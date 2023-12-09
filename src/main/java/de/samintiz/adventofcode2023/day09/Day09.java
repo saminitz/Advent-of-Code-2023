@@ -22,14 +22,33 @@ public class Day09 implements Day {
     public String partOne() {
         List<List<Integer>> convertedLines = convertAllLines();
         int sum = convertedLines.stream()
-                .map(lineValues -> calculateNextVal(generateAllDifferencesOfLineValues(lineValues))).reduce(0,
-                        (a, b) -> a + b);
+                .map(lineValues -> calculateNextVal(generateAllDifferencesOfLineValues(lineValues)))
+                .reduce(0, (a, b) -> a + b);
         return String.valueOf(sum);
+        // return String.valueOf("Paused");
     }
 
     @Override
     public String partTwo() {
-        return String.valueOf("Not implemented!");
+        List<List<Integer>> convertedLines = convertAllLines();
+        int sum = convertedLines.stream()
+                .map(lineValues -> calculateNextValPartTwo(generateAllDifferencesOfLineValues(lineValues)))
+                .peek(System.out::println)
+                .reduce(0, (a, b) -> a + b);
+        return String.valueOf(sum);
+    }
+
+    private int calculateNextValPartTwo(List<List<Integer>> allDifferences) {
+        allDifferences.get(allDifferences.size() - 1).add(0, 0);
+        for (int i = allDifferences.size() - 2; i >= 0; i--) {
+            List<Integer> currentLine = allDifferences.get(i);
+            List<Integer> belowLine = allDifferences.get(i + 1);
+
+            int newValue = currentLine.get(0) - belowLine.get(0);
+            currentLine.add(0, newValue);
+        }
+
+        return allDifferences.get(0).get(0);
     }
 
     private int calculateNextVal(List<List<Integer>> allDifferences) {
