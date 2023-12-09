@@ -25,7 +25,6 @@ public class Day09 implements Day {
                 .map(lineValues -> calculateNextVal(generateAllDifferencesOfLineValues(lineValues)))
                 .reduce(0, (a, b) -> a + b);
         return String.valueOf(sum);
-        // return String.valueOf("Paused");
     }
 
     @Override
@@ -33,7 +32,6 @@ public class Day09 implements Day {
         List<List<Integer>> convertedLines = convertAllLines();
         int sum = convertedLines.stream()
                 .map(lineValues -> calculateNextValPartTwo(generateAllDifferencesOfLineValues(lineValues)))
-                .peek(System.out::println)
                 .reduce(0, (a, b) -> a + b);
         return String.valueOf(sum);
     }
