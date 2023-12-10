@@ -26,7 +26,7 @@ public class Main {
         String partOneTwo = dayPartOne.partOne();
 
         Day dayPartTwo = getNewDayInstance(dayNumber);
-        String partTwoResult = dayPartTwo.partOne();
+        String partTwoResult = dayPartTwo.partTwo();
 
         long endTime = System.currentTimeMillis();
         long elapsedTime = endTime - startTime;
