@@ -10,21 +10,26 @@ import de.samintiz.adventofcode2023.reader.InputReader;
 public class Day11 implements Day {
 
     private List<String> allLines;
+    private List<Integer> yExpansions;
+    private List<Integer> xExpansions;
 
     @Override
     public void init() {
         allLines = new InputReader(this, InputFile.INPUT).readAllLines();
+        yExpansions = new ArrayList<>();
+        xExpansions = new ArrayList<>();
     }
 
     @Override
     public String partOne() {
-        expandAllUniverse();
-        return String.valueOf(calculateSumOfEveryGalaxPair(getCoordsOfGalaxies()));
+        fillExpansionsArrays();
+        return String.valueOf(calculateSumOfEveryGalaxPair(getCoordsOfGalaxies(1)));
     }
 
     @Override
     public String partTwo() {
-        return String.valueOf("Not implemented!");
+        fillExpansionsArrays();
+        return String.valueOf(calculateSumOfEveryGalaxPair(getCoordsOfGalaxies(1000000)));
     }
 
     private long calculateSumOfEveryGalaxPair(List<Point> pointList) {
@@ -39,13 +44,12 @@ public class Day11 implements Day {
         return sum;
     }
 
-    private List<Point> getCoordsOfGalaxies() {
+    private List<Point> getCoordsOfGalaxies(int sizeExpansion) {
         List<Point> pointList = new ArrayList<>();
-
         for (int y = 0; y < allLines.size(); y++) {
             for (int x = 0; x < allLines.get(y).length(); x++) {
                 if (allLines.get(y).charAt(x) == '#') {
-                    pointList.add(new Point(x, y));
+                    pointList.add(expandPoint(new Point(x, y), sizeExpansion));
                 }
             }
         }
@@ -53,10 +57,23 @@ public class Day11 implements Day {
         return pointList;
     }
 
-    private void expandAllUniverse() {
-        List<String> expandedLines = new ArrayList<>(allLines);
+    private Point expandPoint(Point original, int sizeExpansion) {
+        int newX = scaleAxis(original.x(), sizeExpansion, xExpansions);
+        int newY = scaleAxis(original.y(), sizeExpansion, yExpansions);
+        return new Point(newX, newY);
+    }
 
-        for (int x = allLines.get(0).length() - 1; x >= 0; x--) {
+    private int scaleAxis(int axis, int sizeExpansion, List<Integer> expansionsArr) {
+        for (int i = expansionsArr.size() - 1; i >= 0; i--) {
+            if (axis > expansionsArr.get(i)) {
+                return axis + ((sizeExpansion - 1) * (i + 1));
+            }
+        }
+        return axis;
+    }
+
+    private void fillExpansionsArrays() {
+        for (int x = 0; x < allLines.get(0).length(); x++) {
             boolean hasHashtag = false;
             for (int y = 0; y < allLines.size(); y++) {
                 if (allLines.get(y).charAt(x) == '#') {
@@ -65,26 +82,15 @@ public class Day11 implements Day {
                 }
             }
             if (!hasHashtag) {
-                duplicateVerticalLine(expandedLines, x);
+                xExpansions.add(x);
             }
         }
 
         // horizontal direction
-        for (int y = 0; y < expandedLines.size(); y++) {
-            if (!expandedLines.get(y).contains("#")) {
-                expandedLines.add(y, expandedLines.get(y));
-                y++;
+        for (int y = 0; y < allLines.size(); y++) {
+            if (!allLines.get(y).contains("#")) {
+                yExpansions.add(y);
             }
         }
-
-        allLines = expandedLines;
     }
-
-    private void duplicateVerticalLine(List<String> expandedLines, int horizontalIndex) {
-        for (int y = 0; y < expandedLines.size(); y++) {
-            expandedLines.set(y, expandedLines.get(y).substring(0, horizontalIndex) + "."
-                    + expandedLines.get(y).substring(horizontalIndex));
-        }
-    }
-
 }
